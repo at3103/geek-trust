@@ -1,6 +1,8 @@
 import argparse
 from src.helper_methods import encrypt, get_encrypted_emblems, is_ally
+from src.exceptions import InvalidKingdom, IncorrectInputFormat
 from collections import defaultdict, Counter
+
 
 
 def find_ruler(fname):
@@ -8,28 +10,30 @@ def find_ruler(fname):
 		Reads the input file and determines the ruler.
 	"""
 
-#	kingdom_msgs = defaultdict()
-	allies = list(["SPACE"])
-	kingdom_emblem = get_encrypted_emblems()
+	candidate, kingdom_emblem = get_encrypted_emblems()
+	allies = list([candidate])
 
-	MAJORITY = -(len(kingdom_emblem)//-2)
+	MAJORITY = -(len(kingdom_emblem)//-2) + 1
 
 	with open(fname, "r") as file:
 		for lno, line in enumerate(file,1):
 			tokens = line.strip().split(" ",1)
 
 			if len(tokens) < 2:
-				return "Incorrect input format on line number {lno}.\
- Please provide one kingdom and a non-blank message each line".format(lno=lno)
+				raise IncorrectInputFormat(line_no=lno)
 
 			kingdom, msg = tokens
+
+			if kingdom not in kingdom_emblem:
+				raise InvalidKingdom(kingdom, kingdom_emblem.keys())
+
 			if kingdom in allies:
-				continue
+				continue 
 			elif is_ally(kingdom_emblem.get(kingdom), msg):
 				allies.append(kingdom)
 
 
-	if len(allies) >= MAJORITY + 1:
+	if len(allies) >= MAJORITY:
 		return " ".join(allies)
 
 	return "NONE"

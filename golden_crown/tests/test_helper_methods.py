@@ -10,10 +10,14 @@ from src.exceptions import InvalidEncryption
     ('A', 7, 'H'),
     ('O', 7, 'V'),
     ('T', 7, 'A'),
+    ('T', 59, 'A'),
+    ('T', 52, 'T'),
+    ('Z', 260, 'Z')
 ])
 def test_encrypt_positive(input_char, ckey, expected_char):
 
 	assert encrypt(input_char, ckey) == expected_char
+
 
 @pytest.mark.parametrize("input_char, ckey", [
     ("1", 3),

@@ -1,7 +1,10 @@
-{	"SPACE" : "GORILLA",
+{
+	"all_kingdoms": {
+	"SPACE" : "GORILLA",
 	"LAND"  : "PANDA",
 	"WATER" : "OCTOPUS",
 	"ICE"   : "MAMMOTH",
 	"AIR"   : "OWL",
-	"FIRE"  : "DRAGON" 
+	"FIRE"  : "DRAGON" },
+	"candidate": "SPACE"
 }
